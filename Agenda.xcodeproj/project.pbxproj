@@ -16,6 +16,11 @@
 		03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */; };
 		03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */; };
 		2658BE3A2236A9160032517B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658BE392236A9160032517B /* ImagePicker.swift */; };
+		2668622822A9CC270020319F /* MenuDeOpcoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668622722A9CC270020319F /* MenuDeOpcoes.swift */; };
+		26D3B69422B1AE9C00CDCF07 /* Localizacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */; };
+		26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */; };
+		26D3B69B22B304CF00CDCF07 /* CalculaMediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */; };
+		26E0FA8A22AF0FC9008D65BD /* Mensagem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E0FA8922AF0FC9008D65BD /* Mensagem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoViewController.swift; sourceTree = "<group>"; };
 		2658BE392236A9160032517B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2668622722A9CC270020319F /* MenuDeOpcoes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDeOpcoes.swift; sourceTree = "<group>"; };
+		26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizacao.swift; sourceTree = "<group>"; };
+		26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculaMediaAPI.swift; sourceTree = "<group>"; };
+		26E0FA8922AF0FC9008D65BD /* Mensagem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mensagem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +76,7 @@
 				03AA174D1FC84154003CB2B8 /* AppDelegate.swift */,
 				03AA17621FC8433E003CB2B8 /* Home */,
 				03AA17691FC84A2D003CB2B8 /* Alunos */,
+				26D3B69522B1BA4D00CDCF07 /* Mapa */,
 				03AA17511FC84154003CB2B8 /* Main.storyboard */,
 				03AA17571FC84154003CB2B8 /* Assets.xcassets */,
 				03AA17591FC84154003CB2B8 /* LaunchScreen.storyboard */,
@@ -78,6 +89,7 @@
 		03AA17621FC8433E003CB2B8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				26D3B69922B304A400CDCF07 /* Model */,
 				03AA17641FC8433E003CB2B8 /* View */,
 				03AA17631FC8433E003CB2B8 /* Controller */,
 			);
@@ -128,8 +140,35 @@
 			isa = PBXGroup;
 			children = (
 				2658BE392236A9160032517B /* ImagePicker.swift */,
+				2668622722A9CC270020319F /* MenuDeOpcoes.swift */,
+				26E0FA8922AF0FC9008D65BD /* Mensagem.swift */,
+				26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */,
 			);
 			path = Componentes;
+			sourceTree = "<group>";
+		};
+		26D3B69522B1BA4D00CDCF07 /* Mapa */ = {
+			isa = PBXGroup;
+			children = (
+				26D3B69622B1BA6400CDCF07 /* Controller */,
+			);
+			path = Mapa;
+			sourceTree = "<group>";
+		};
+		26D3B69622B1BA6400CDCF07 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		26D3B69922B304A400CDCF07 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,9 +246,14 @@
 				03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */,
 				03AA17661FC84353003CB2B8 /* HomeTableViewController.swift in Sources */,
 				03AA17561FC84154003CB2B8 /* Agenda.xcdatamodeld in Sources */,
+				2668622822A9CC270020319F /* MenuDeOpcoes.swift in Sources */,
+				26D3B69B22B304CF00CDCF07 /* CalculaMediaAPI.swift in Sources */,
 				2658BE3A2236A9160032517B /* ImagePicker.swift in Sources */,
 				03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */,
+				26E0FA8A22AF0FC9008D65BD /* Mensagem.swift in Sources */,
+				26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */,
 				03AA174E1FC84154003CB2B8 /* AppDelegate.swift in Sources */,
+				26D3B69422B1AE9C00CDCF07 /* Localizacao.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +308,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: diniz.mauroaugusto@gmail.com (843X8C8XDH)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -321,7 +365,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: diniz.mauroaugusto@gmail.com (843X8C8XDH)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -348,14 +392,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = M6S53Z4S25;
 				INFOPLIST_FILE = Agenda/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = apps.Agenda;
+				PRODUCT_BUNDLE_IDENTIFIER = apps.AgendaMauro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -365,14 +410,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = M6S53Z4S25;
 				INFOPLIST_FILE = Agenda/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = apps.Agenda;
+				PRODUCT_BUNDLE_IDENTIFIER = apps.AgendaMauro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

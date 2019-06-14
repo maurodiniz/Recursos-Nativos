@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     
@@ -26,6 +27,15 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     // MARK: - Atributos
     let imagePicker = ImagePicker()
     
+    // busncando o contexto que já existe no appDelegate
+    var contexto: NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        return appDelegate.persistentContainer.viewContext
+    }
+    
+    var aluno: Aluno?
+    
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
@@ -43,6 +53,14 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     
     func setup(){
         imagePicker.delegate = self
+        
+        guard let alunoSelecionado = aluno else { return }
+        textFieldNome.text = alunoSelecionado.nome
+        textFieldEndereco.text = alunoSelecionado.endereco
+        textFieldTelefone.text = alunoSelecionado.telefone
+        textFieldSite.text = alunoSelecionado.site
+        textFieldNota.text = "\(alunoSelecionado.nota)"
+        imageAluno.image = alunoSelecionado.foto as? UIImage
     }
     
     func arredondaView() {
@@ -55,6 +73,19 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
         self.scrollViewPrincipal.contentSize = CGSize(width: self.scrollViewPrincipal.frame.width, height: self.scrollViewPrincipal.frame.height + self.scrollViewPrincipal.frame.height/2)
     }
     
+    func mostrarMultimidia(_ opcao: MenuOpcoes) {
+        let multimidia = UIImagePickerController()
+        multimidia.delegate = imagePicker
+        
+        if opcao == .camera && UIImagePickerController.isSourceTypeAvailable(.camera) {
+            multimidia.sourceType = .camera
+        } else {
+            multimidia.sourceType = .photoLibrary
+        }
+        self.present(multimidia, animated: true, completion: nil)
+        
+    }
+    
     // MARK: - Delegate
     
     func imagePickerFotoSelecionada(_ foto: UIImage) {
@@ -64,13 +95,13 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     // MARK: - IBActions
     
     @IBAction func buttonFoto(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            let multimidia = UIImagePickerController()
-            multimidia.sourceType = .camera
-            multimidia.delegate = ImagePicker
-            
-            self.present(multimidia, animated: true, completion: nil)
+        
+        let menu = ImagePicker().menuDeOpcoes { (opcao) in
+            self.mostrarMultimidia(opcao)
         }
+        present(menu, animated: true, completion: nil)
+        
+        
         
         
     }
@@ -79,5 +110,26 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
         self.textFieldNota.text = "\(sender.value)"
     }
     
+    @IBAction func buttonSalvar(_ sender: UIButton) {
+        // se não existir um aluno, significa que é novo item. Se existir, é edição 
+        if aluno == nil {
+            aluno = Aluno(context: contexto)
+        }
+        
+        aluno?.nome = textFieldNome.text
+        aluno?.endereco = textFieldEndereco.text
+        aluno?.telefone = textFieldTelefone.text
+        aluno?.site = textFieldSite.text
+        aluno?.nota = (textFieldNota.text! as NSString).doubleValue
+        aluno?.foto = imageAluno.image
+        
+        do {
+            try contexto.save()
+            navigationController?.popViewController(animated: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
     
 }

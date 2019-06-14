@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MAa-UF-TLD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MAa-UF-TLD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Agenda-->
         <scene sceneID="VnG-HC-eXo">
@@ -47,6 +42,7 @@
                                 <connections>
                                     <outlet property="imageAluno" destination="I1a-iL-YQH" id="dM3-yt-b69"/>
                                     <outlet property="labelNomeDoAluno" destination="oKL-i4-VS5" id="GFr-bb-rep"/>
+                                    <segue destination="ZY7-NM-Hup" kind="show" identifier="editar" id="JfZ-49-WWw"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -57,7 +53,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Agenda" id="aoB-Jw-lAm">
                         <barButtonItem key="backBarButtonItem" title=" " id="M57-Hv-I3X"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="dzi-1s-s3a"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="dzi-1s-s3a">
+                            <connections>
+                                <action selector="buttonCalculaMedia:" destination="Qhi-kM-lyB" id="xLq-Ep-xeY"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4cp-jd-Mnv">
                             <connections>
                                 <segue destination="ZY7-NM-Hup" kind="show" id="tio-sZ-JlU"/>
@@ -213,6 +213,9 @@
                                                 <state key="normal" title="salvar">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="buttonSalvar:" destination="ZY7-NM-Hup" eventType="touchUpInside" id="li0-Xy-6gv"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -253,6 +256,35 @@
             </objects>
             <point key="canvasLocation" x="1189.5999999999999" y="115.59220389805098"/>
         </scene>
+        <!--Mapa View Controller-->
+        <scene sceneID="7d0-a3-FY7">
+            <objects>
+                <viewController storyboardIdentifier="mapa" id="7xb-k4-aGJ" customClass="MapaViewController" customModule="Agenda" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ful-qw-r0Y">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YT4-qQ-q9k">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YT4-qQ-q9k" firstAttribute="trailing" secondItem="QNy-pf-Sbw" secondAttribute="trailing" id="Axj-TU-WEx"/>
+                            <constraint firstItem="YT4-qQ-q9k" firstAttribute="leading" secondItem="QNy-pf-Sbw" secondAttribute="leading" id="Gd8-mB-zET"/>
+                            <constraint firstItem="YT4-qQ-q9k" firstAttribute="top" secondItem="QNy-pf-Sbw" secondAttribute="top" id="XTg-St-33y"/>
+                            <constraint firstItem="YT4-qQ-q9k" firstAttribute="bottom" secondItem="QNy-pf-Sbw" secondAttribute="bottom" id="i8C-5n-1hI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="QNy-pf-Sbw"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapa" destination="YT4-qQ-q9k" id="t5J-HE-l3V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1p8-ac-ERD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2037.5999999999999" y="115.59220389805098"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="yXs-rW-FGy">
             <objects>
@@ -270,4 +302,7 @@
             <point key="canvasLocation" x="-519" y="116"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="JfZ-49-WWw"/>
+    </inferredMetricsTieBreakers>
 </document>

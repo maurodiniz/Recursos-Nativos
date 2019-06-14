@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum MenuOpcoes {
+    case camera
+    case biblioteca
+}
+
 protocol imagePickerFotoSelecionada {
     func imagePickerFotoSelecionada(_ foto: UIImage)
 }
@@ -24,5 +29,23 @@ class ImagePicker: NSObject, UIImagePickerControllerDelegate, UINavigationContro
         delegate?.imagePickerFotoSelecionada(foto)
         
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func menuDeOpcoes(completion: @escaping(_ opcao: MenuOpcoes) -> Void) -> UIAlertController {
+        // criando um UIAlertController do tipo actionSheet para que apareça um menu de opções quando o usuario clicar na foto
+        let menu = UIAlertController(title: "Atenção", message: "Escolha uma das opções abaixo", preferredStyle: .actionSheet)
+        //opçoes do menu
+        let camera = UIAlertAction(title: "tirar foto", style: .default) { (acao) in
+            completion(.camera)
+        }
+        menu.addAction(camera)
+        let biblioteca = UIAlertAction(title: "biblioteca", style: .default) { (acao) in
+            completion(.biblioteca)
+        }
+        menu.addAction(biblioteca)
+        let cancelar = UIAlertAction(title: "cancelar", style: .cancel, handler: nil)
+        menu.addAction(cancelar)
+        
+        return menu
     }
 }
