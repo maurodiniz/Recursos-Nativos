@@ -11,6 +11,10 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    enum tipoDeShortcut: String {
+        case cadastrarAluno = "CadastrarAluno"
+    }
 
     var window: UIWindow?
 
@@ -42,6 +46,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        // validando se o shortcut que o usuario clicou é um dos que existem no enum criado(tipoDeShortcut)
+        if let tipo = tipoDeShortcut(rawValue: shortcutItem.type) {
+            switch tipo {
+            case .cadastrarAluno:
+                let cadastrarAluno = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CadastrarAluno")
+                let navigation = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+                navigation?.pushViewController(cadastrarAluno, animated: true)
+                
+                break
+            }
+        }
     }
 
     // MARK: - Core Data stack

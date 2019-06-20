@@ -8,12 +8,13 @@
 
 import UIKit
 import CoreData
+import SafariServices
 
-class HomeTableViewController: UITableViewController, UISearchBarDelegate {
+class HomeTableViewController: UITableViewController {
     
     //MARK: - Variáveis
     
-    // busncando o contexto que já existe no appDelegate
+    // buscando o contexto que já existe no appDelegate
     var contexto: NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -49,7 +50,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
         self.navigationItem.searchController = searchController
     }
     
-    func recuperaAluno(){
+    func recuperaAluno(filtro: String = ""){
         // criando o request
         let pesquisaAluno: NSFetchRequest<Aluno> = Aluno.fetchRequest()
         
@@ -57,6 +58,12 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
         let ordenaPorNome = NSSortDescriptor(key: "nome", ascending: true)
         
         pesquisaAluno.sortDescriptors = [ordenaPorNome]
+        
+        // se tiver algo na string filtro, carrego a lista com o filtro
+        if verificaFiltro(filtro) {
+            pesquisaAluno.predicate = filtraAluno(filtro)
+        }
+        
         
         gerenciadorDeResultados = NSFetchedResultsController(fetchRequest: pesquisaAluno, managedObjectContext: contexto, sectionNameKeyPath: nil, cacheName: nil)
         gerenciadorDeResultados?.delegate = self
@@ -66,6 +73,17 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
         }catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func filtraAluno(_ filtro: String) -> NSPredicate {
+        return NSPredicate(format: "nome CONTAINS %@", filtro)
+    }
+    
+    func verificaFiltro(_ filtro: String) -> Bool {
+        if filtro.isEmpty {
+            return false
+        }
+        return true
     }
     
     @objc func abrirActionSheet(_ longPress: UILongPressGestureRecognizer){
@@ -113,6 +131,22 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
                         self.navigationController?.pushViewController(mapa, animated: true)
                         
                         break
+                    case .abrirPaginaWeb:
+                        // recuperando o site cadastrado e validando se está formatado
+                        guard var urlDoAluno = alunoSelecionado.site else {return}
+                        if !urlDoAluno.hasPrefix("https://") {
+                            urlDoAluno = String(format: "https://%@", urlDoAluno)
+                        }
+                        
+                        // transformando a string formatada acima em URL
+                        guard let url = URL(string: urlDoAluno) else {return}
+                        
+                        // usando o UIApplication eu consigo abrir a pagina no proprio navegador, porém foi usado o safariservices que abre a pagina dentro do proprio app e não permite a alteração de url
+                        //UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        let safariViewController = SFSafariViewController(url: url)
+                        self.present(safariViewController, animated: true, completion: nil)
+                        
+                        break
                 }
                 
             }
@@ -131,6 +165,9 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celula-aluno", for: indexPath) as! HomeTableViewCell
         
+        // cada linha da lista tera uma tag diferente, usada para identificar os registros individualmente
+        cell.tag = indexPath.row
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(abrirActionSheet(_:)))
         
         guard let aluno = gerenciadorDeResultados?.fetchedObjects![indexPath.row] else { return cell }
@@ -147,15 +184,25 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let alunoSelecionado = gerenciadorDeResultados?.fetchedObjects![indexPath.row] else {return}
-            
-            contexto.delete(alunoSelecionado)
-            
-            do {
-                try contexto.save()
-            }catch {
-                print(error.localizedDescription)
+            AutenticacaoLocal().autorizaUsuario { (autenticado) in
+                if autenticado {
+                    DispatchQueue.main.async {
+                        guard let alunoSelecionado = self.gerenciadorDeResultados?.fetchedObjects![indexPath.row] else {return}
+                        
+                        self.contexto.delete(alunoSelecionado)
+                        
+                        do {
+                            try self.contexto.save()
+                        }catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    
+                    
+                }
             }
+            
+            
             
             
         } else if editingStyle == .insert {
@@ -179,9 +226,25 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     @IBAction func buttonCalculaMedia(_ sender: UIBarButtonItem) {
-        CalculaMediaAPI().calculaMediaGeralDosAlunos()
+        
+        guard let listaDeAlunos = gerenciadorDeResultados?.fetchedObjects else { return }
+        
+        // chamando a função de calculo de media passando o dicionario retornado da closure
+        CalculaMediaAPI().calculaMediaGeralDosAlunos(alunos: listaDeAlunos, sucesso: { (dicionario) in
+            if let alerta = Notificacoes().exibeNotificacaoDeMediaDosAlunos(dicionario) {
+                self.present(alerta, animated: true, completion: nil)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
+    @IBAction func buttonLocalizacaoGeral(_ sender: UIBarButtonItem) {
+        // recuperando o viewController que queremos utilizar
+        let mapa = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapa") as! MapaViewController
+        
+        navigationController?.pushViewController(mapa, animated: true)
+    }
     
 }
 
@@ -196,5 +259,22 @@ extension HomeTableViewController: NSFetchedResultsControllerDelegate {
         default:
             tableView.reloadData()
         }
+    }
+}
+
+// delegate do searchbar para que eu possa buscar os alunos na lista
+extension HomeTableViewController: UISearchBarDelegate {
+    // ação quando o usuario clicar no botão de search
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let nomeDoAluno = searchBar.text else { return }
+        
+        recuperaAluno(filtro: nomeDoAluno)
+        tableView.reloadData()
+    }
+    
+    // ação quando o usuario clicar no botão de cancelar
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        recuperaAluno()
+        tableView.reloadData()
     }
 }

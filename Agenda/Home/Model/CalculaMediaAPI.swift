@@ -10,22 +10,36 @@ import UIKit
 
 class CalculaMediaAPI: NSObject {
 
-    func calculaMediaGeralDosAlunos(){
+    // closure criada para retornar o dicionario de alunos para o viewController manipular
+    func calculaMediaGeralDosAlunos(alunos: Array<Aluno>, sucesso:@escaping(_ dicionarioDeMedias: Dictionary<String, Any>) -> Void, falha:@escaping(_ erro: Error) -> Void ){
         // para acessar o servidor é necessario saber o endereço em que vamos mandar as informações dos alunos
         guard let url = URL(string: "https://www.caelum.com.br/mobile") else {return}
         
         var listaDeAlunos: Array<Dictionary<String, Any>> = []
         var json: Dictionary<String, Any> = [:]
         
-        let dicionarioDeAlunos = [
-            "id": "1",
-            "nome": "Mauro",
-            "endereco": "rua 7, Sorocaba",
-            "telefone": "+5515991775256",
-            "site": "www.alura.com.br",
-            "nota": "10",
-        ]
-        listaDeAlunos.append(dicionarioDeAlunos as [String: Any])
+        // laço para percorrer todos os alunos e extrair os dados
+        for aluno in alunos {
+            
+            guard let nome = aluno.nome else {break}
+            guard let endereco = aluno.endereco else {break}
+            guard let telefone = aluno.telefone else {break}
+            guard let site = aluno.site else {break}
+            
+            let dicionarioDeAlunos = [
+                // objectID é gerado pelo próprio CoreData e refere ao id do registro que ele está percorrendo no momento.
+                "id": "\(aluno.objectID)",
+                "nome": "\(nome)",
+                "endereco": endereco,
+                "telefone": telefone,
+                "site": site,
+                "nota": String(aluno.nota),
+            ]
+            listaDeAlunos.append(dicionarioDeAlunos as [String: Any])
+        }
+        
+        
+        
         
         json = [
             "list": [
@@ -49,10 +63,10 @@ class CalculaMediaAPI: NSObject {
                 if error == nil {
                     // transformando o Data em um dicionario
                     do{
-                        let dicionario = try JSONSerialization.jsonObject(with: data!, options: [])
-                        print(dicionario)
+                        let dicionario = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
+                        sucesso(dicionario)
                     }catch{
-                        print(error.localizedDescription)
+                        falha(error)
                     }
                 }
             }
