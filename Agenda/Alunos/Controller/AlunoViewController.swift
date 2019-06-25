@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+
 
 class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     
@@ -26,14 +26,6 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     
     // MARK: - Atributos
     let imagePicker = ImagePicker()
-    
-    // busncando o contexto que já existe no appDelegate
-    var contexto: NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        return appDelegate.persistentContainer.viewContext
-    }
-    
     var aluno: Aluno?
     
     // MARK: - View Lifecycle
@@ -86,6 +78,23 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
         
     }
     
+    // montando o dicionario que será enviado no AlunoAPI().salvaAlunosNoServidor
+    func montaDicionarioDeParametros() -> Dictionary<String, String> {
+        // extraindo os dados para montar o dicionario
+        guard let nome = textFieldNome.text else { return [:] }
+        guard let endereco = textFieldEndereco.text else { return [:] }
+        guard let telefone = textFieldTelefone.text else { return [:] }
+        guard let site = textFieldSite.text else { return [:] }
+        guard let nota = textFieldNota.text else { return [:] }
+        
+        // para gerar o id posso usar a classe UUID que gera um valor aleatorio e transforma-lo em string
+        let id = String(describing: UUID())
+        
+        let dicionario: Dictionary<String, String> = ["id":id,"nome":nome,"endereco":endereco,"telefone":telefone,"site":site,"nota":nota]
+        
+        return dicionario
+    }
+    
     // MARK: - Delegate
     
     func imagePickerFotoSelecionada(_ foto: UIImage) {
@@ -111,25 +120,13 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     }
     
     @IBAction func buttonSalvar(_ sender: UIButton) {
-        // se não existir um aluno, significa que é novo item. Se existir, é edição 
-        if aluno == nil {
-            aluno = Aluno(context: contexto)
-        }
         
-        aluno?.nome = textFieldNome.text
-        aluno?.endereco = textFieldEndereco.text
-        aluno?.telefone = textFieldTelefone.text
-        aluno?.site = textFieldSite.text
-        aluno?.nota = (textFieldNota.text! as NSString).doubleValue
-        aluno?.foto = imageAluno.image
         
-        do {
-            try contexto.save()
-            navigationController?.popViewController(animated: true)
-        } catch {
-            print(error.localizedDescription)
-        }
+        // fazendo a conversao dos dados em json e enviando para a requisicao salvar no servidor
+        let json = montaDicionarioDeParametros()
+        Repositorio().salvaAluno(aluno: json)
         
+        navigationController?.popViewController(animated: true)
     }
     
 }

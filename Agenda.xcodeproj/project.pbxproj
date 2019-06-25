@@ -15,8 +15,12 @@
 		03AA17661FC84353003CB2B8 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA17651FC84353003CB2B8 /* HomeTableViewController.swift */; };
 		03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */; };
 		03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */; };
+		0AAFA5D8A65B0D827C913E9E /* Pods_Agenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A94C357A863B68078486B1 /* Pods_Agenda.framework */; };
+		2657DD1222C1806500D3393B /* Repositorio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657DD1122C1806500D3393B /* Repositorio.swift */; };
+		2657DD1422C1811800D3393B /* AlunoDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657DD1322C1811800D3393B /* AlunoDAO.swift */; };
 		2658BE3A2236A9160032517B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658BE392236A9160032517B /* ImagePicker.swift */; };
 		2668622822A9CC270020319F /* MenuDeOpcoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668622722A9CC270020319F /* MenuDeOpcoes.swift */; };
+		26A1D4E122BD08A60025FA58 /* AlunoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A1D4E022BD08A60025FA58 /* AlunoAPI.swift */; };
 		26A8FBE922B848B500DB9011 /* Notificacoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8FBE822B848B500DB9011 /* Notificacoes.swift */; };
 		26A8FBEB22B84F0E00DB9011 /* AutenticacaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8FBEA22B84F0E00DB9011 /* AutenticacaoLocal.swift */; };
 		26A8FBEE22BAD83A00DB9011 /* Pino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8FBED22BAD83A00DB9011 /* Pino.swift */; };
@@ -37,8 +41,11 @@
 		03AA17651FC84353003CB2B8 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoViewController.swift; sourceTree = "<group>"; };
+		2657DD1122C1806500D3393B /* Repositorio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositorio.swift; sourceTree = "<group>"; };
+		2657DD1322C1811800D3393B /* AlunoDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoDAO.swift; sourceTree = "<group>"; };
 		2658BE392236A9160032517B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2668622722A9CC270020319F /* MenuDeOpcoes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDeOpcoes.swift; sourceTree = "<group>"; };
+		26A1D4E022BD08A60025FA58 /* AlunoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoAPI.swift; sourceTree = "<group>"; };
 		26A8FBE822B848B500DB9011 /* Notificacoes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notificacoes.swift; sourceTree = "<group>"; };
 		26A8FBEA22B84F0E00DB9011 /* AutenticacaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticacaoLocal.swift; sourceTree = "<group>"; };
 		26A8FBED22BAD83A00DB9011 /* Pino.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pino.swift; sourceTree = "<group>"; };
@@ -46,6 +53,9 @@
 		26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
 		26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculaMediaAPI.swift; sourceTree = "<group>"; };
 		26E0FA8922AF0FC9008D65BD /* Mensagem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mensagem.swift; sourceTree = "<group>"; };
+		C258B877B94BFED5D60D0719 /* Pods-Agenda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agenda.debug.xcconfig"; path = "Target Support Files/Pods-Agenda/Pods-Agenda.debug.xcconfig"; sourceTree = "<group>"; };
+		C6A0C5E7BBD6A6695C734882 /* Pods-Agenda.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agenda.release.xcconfig"; path = "Target Support Files/Pods-Agenda/Pods-Agenda.release.xcconfig"; sourceTree = "<group>"; };
+		F9A94C357A863B68078486B1 /* Pods_Agenda.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Agenda.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AAFA5D8A65B0D827C913E9E /* Pods_Agenda.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +75,8 @@
 			children = (
 				03AA174C1FC84154003CB2B8 /* Agenda */,
 				03AA174B1FC84154003CB2B8 /* Products */,
+				FC46BBC1325B7BDCCEF125A1 /* Pods */,
+				824FF431A9209EA58F7C6AC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +134,7 @@
 		03AA17691FC84A2D003CB2B8 /* Alunos */ = {
 			isa = PBXGroup;
 			children = (
+				26A1D4DF22BD08840025FA58 /* Model */,
 				03AA176B1FC84A2D003CB2B8 /* View */,
 				03AA176A1FC84A2D003CB2B8 /* Controller */,
 			);
@@ -153,6 +167,16 @@
 				26A8FBEA22B84F0E00DB9011 /* AutenticacaoLocal.swift */,
 			);
 			path = Componentes;
+			sourceTree = "<group>";
+		};
+		26A1D4DF22BD08840025FA58 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				26A1D4E022BD08A60025FA58 /* AlunoAPI.swift */,
+				2657DD1122C1806500D3393B /* Repositorio.swift */,
+				2657DD1322C1811800D3393B /* AlunoDAO.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		26A8FBEC22BAD82700DB9011 /* Model */ = {
@@ -188,6 +212,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		824FF431A9209EA58F7C6AC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F9A94C357A863B68078486B1 /* Pods_Agenda.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FC46BBC1325B7BDCCEF125A1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C258B877B94BFED5D60D0719 /* Pods-Agenda.debug.xcconfig */,
+				C6A0C5E7BBD6A6695C734882 /* Pods-Agenda.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -195,9 +236,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03AA175F1FC84154003CB2B8 /* Build configuration list for PBXNativeTarget "Agenda" */;
 			buildPhases = (
+				8807AD2C89F5277BA2EA874E /* [CP] Check Pods Manifest.lock */,
 				03AA17461FC84154003CB2B8 /* Sources */,
 				03AA17471FC84154003CB2B8 /* Frameworks */,
 				03AA17481FC84154003CB2B8 /* Resources */,
+				5B1CAD40E567F61ABE045366 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,13 +298,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5B1CAD40E567F61ABE045366 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Agenda/Pods-Agenda-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Agenda/Pods-Agenda-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8807AD2C89F5277BA2EA874E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Agenda-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		03AA17461FC84154003CB2B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */,
+				26A1D4E122BD08A60025FA58 /* AlunoAPI.swift in Sources */,
 				26A8FBEE22BAD83A00DB9011 /* Pino.swift in Sources */,
+				2657DD1422C1811800D3393B /* AlunoDAO.swift in Sources */,
 				03AA17661FC84353003CB2B8 /* HomeTableViewController.swift in Sources */,
 				03AA17561FC84154003CB2B8 /* Agenda.xcdatamodeld in Sources */,
 				2668622822A9CC270020319F /* MenuDeOpcoes.swift in Sources */,
@@ -270,6 +358,7 @@
 				03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */,
 				26E0FA8A22AF0FC9008D65BD /* Mensagem.swift in Sources */,
 				26A8FBE922B848B500DB9011 /* Notificacoes.swift in Sources */,
+				2657DD1222C1806500D3393B /* Repositorio.swift in Sources */,
 				26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */,
 				03AA174E1FC84154003CB2B8 /* AppDelegate.swift in Sources */,
 				26D3B69422B1AE9C00CDCF07 /* Localizacao.swift in Sources */,
@@ -408,6 +497,7 @@
 		};
 		03AA17601FC84154003CB2B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C258B877B94BFED5D60D0719 /* Pods-Agenda.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -426,6 +516,7 @@
 		};
 		03AA17611FC84154003CB2B8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6A0C5E7BBD6A6695C734882 /* Pods-Agenda.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
