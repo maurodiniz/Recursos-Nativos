@@ -80,6 +80,16 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
     
     // montando o dicionario que será enviado no AlunoAPI().salvaAlunosNoServidor
     func montaDicionarioDeParametros() -> Dictionary<String, String> {
+        
+        // se ja existir um aluno.id quer dizer que é edição e preciso usar id existente, senão é novo registro e preciso gerar um novo id
+        var id = ""
+        if aluno?.id == nil {
+            // para gerar o id posso usar a classe UUID que gera um valor aleatorio e transforma-lo em string
+            id = String(describing: UUID())
+        } else {
+            guard let idExistente = aluno?.id else {return [:]}
+            id = String(describing: idExistente)
+        }
         // extraindo os dados para montar o dicionario
         guard let nome = textFieldNome.text else { return [:] }
         guard let endereco = textFieldEndereco.text else { return [:] }
@@ -87,10 +97,10 @@ class AlunoViewController: UIViewController, imagePickerFotoSelecionada {
         guard let site = textFieldSite.text else { return [:] }
         guard let nota = textFieldNota.text else { return [:] }
         
-        // para gerar o id posso usar a classe UUID que gera um valor aleatorio e transforma-lo em string
-        let id = String(describing: UUID())
         
-        let dicionario: Dictionary<String, String> = ["id":id,"nome":nome,"endereco":endereco,"telefone":telefone,"site":site,"nota":nota]
+        
+        
+        let dicionario: Dictionary<String, String> = ["id":id.lowercased(),"nome":nome,"endereco":endereco,"telefone":telefone,"site":site,"nota":nota]
         
         return dicionario
     }

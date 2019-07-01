@@ -7,25 +7,13 @@
 //
 
 import UIKit
-import CoreData
-import SafariServices
 
 class HomeTableViewController: UITableViewController {
     
     //MARK: - Variáveis
     
-    // buscando o contexto que já existe no appDelegate
-    var contexto: NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        return appDelegate.persistentContainer.viewContext
-    }
-    
     let searchController = UISearchController(searchResultsController: nil)
     var alunoViewController: AlunoViewController?
-    
-    
-    var mensagem = Mensagem()
     var alunos:Array<Aluno> = []
     
     // MARK: - View Lifecycle
@@ -60,67 +48,11 @@ class HomeTableViewController: UITableViewController {
         if longPress.state == .began {
             // acessando o Aluno em que o usuario fez o longPress
             let alunoSelecionado = alunos[(longPress.view?.tag)!]
-            let menu = MenuDeOpcoes().configuraMenuDeOpcoesDoAluno { (opcao) in
-                switch opcao {
-                    case .sms:
-                        if let componenteMensagem = self.mensagem.configuraSMS(alunoSelecionado) {
-                            componenteMensagem.messageComposeDelegate = self.mensagem
-                            self.present(componenteMensagem, animated: true, completion: nil)
-                    }
-                    break
-                    case .ligacao:
-                        guard let numeroDoAluno = alunoSelecionado.telefone else {return}
-                        // através do UIAplication consigo acessar apps externos, como o telefone por exemplo
-                        if let url = URL(string: "tel://\(numeroDoAluno)"), UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                        break
-                    case .waze:
-                        // verificando se o usuario tem waze e se podemos acessa-lo
-                        if UIApplication.shared.canOpenURL(URL(string: "waze://")!) {
-                            // recuperando o endereço do aluno
-                            guard let enderecoDoAluno = alunoSelecionado.endereco else {return}
-                            
-                            
-                            Localizacao().ConverteEnderecoEmCoordenadas(enderecoDoAluno, local: { (localizacaoEncontrada) in
-                                // recuperando a latitude e longitude e convertendo em string
-                                let latitude = String(describing: localizacaoEncontrada.location!.coordinate.latitude)
-                                let longitude = String(describing: localizacaoEncontrada.location!.coordinate.longitude)
-                                
-                                // montando a url com a localização que será enviada para o waze
-                                let url:String = "waze://?ll=\(latitude),\(longitude)&navigate=yes"
-                                
-                                UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
-                            })
-                        }
-                        break
-                    case .mapa:
-                        // selecionando o viewController de mapas e chamando a tela
-                        let mapa = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapa") as! MapaViewController
-                        mapa.aluno = alunoSelecionado
-                        self.navigationController?.pushViewController(mapa, animated: true)
-                        
-                        break
-                    case .abrirPaginaWeb:
-                        // recuperando o site cadastrado e validando se está formatado
-                        guard var urlDoAluno = alunoSelecionado.site else {return}
-                        if !urlDoAluno.hasPrefix("https://") {
-                            urlDoAluno = String(format: "https://%@", urlDoAluno)
-                        }
-                        
-                        // transformando a string formatada acima em URL
-                        guard let url = URL(string: urlDoAluno) else {return}
-                        
-                        // usando o UIApplication eu consigo abrir a pagina no proprio navegador, porém foi usado o safariservices que abre a pagina dentro do proprio app e não permite a alteração de url
-                        //UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        let safariViewController = SFSafariViewController(url: url)
-                        self.present(safariViewController, animated: true, completion: nil)
-                        
-                        break
-                }
-                
-            }
-            self.present(menu, animated: true, completion: nil)
+            
+            guard let navigation = navigationController else {return}
+            let menu = MenuDeOpcoes().configuraMenuDeOpcoesDoAluno(navigation: navigation, alunoSelecionado: alunoSelecionado)
+            
+            present(menu, animated: true, completion: nil)
         }
     }
 
@@ -155,15 +87,13 @@ class HomeTableViewController: UITableViewController {
             AutenticacaoLocal().autorizaUsuario { (autenticado) in
                 if autenticado {
                     DispatchQueue.main.async {
-                       /* guard let alunoSelecionado = self.gerenciadorDeResultados?.fetchedObjects![indexPath.row] else {return}
+                        // recuperando o aluno que está selecionado no momento para que eu possa extrair o id lá no Repositorio().deletaAluno()
+                        let alunoSelecionado = self.alunos[indexPath.row]
+                        Repositorio().deletaAluno(aluno: alunoSelecionado)
                         
-                        self.contexto.delete(alunoSelecionado)
-                        
-                        do {
-                            try self.contexto.save()
-                        }catch {
-                            print(error.localizedDescription)
-                        } */
+                        // excluindo o aluno da lista e apagando a celula que ele estava
+                        self.alunos.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
                     }
                     
                     
@@ -215,28 +145,19 @@ class HomeTableViewController: UITableViewController {
 }
 
 // MARK: - Extensions
-extension HomeTableViewController: NSFetchedResultsControllerDelegate {
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .delete:
-            guard let indexPath = indexPath else {return}
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            break
-        default:
-            tableView.reloadData()
-        }
-    }
-}
-
 // delegate do searchbar para que eu possa buscar os alunos na lista
 extension HomeTableViewController: UISearchBarDelegate {
     // ação quando o usuario clicar no botão de search
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        if let texto = searchBar.text {
+            alunos = Filtro().filtraAlunos(alunos, filtro: texto)
+        }
+        tableView.reloadData()
     }
     
     // ação quando o usuario clicar no botão de cancelar
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
+        alunos = AlunoDAO().recuperaAlunos()
+        tableView.reloadData()
     }
 }

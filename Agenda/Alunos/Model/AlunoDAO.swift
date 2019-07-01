@@ -46,21 +46,31 @@ class AlunoDAO: NSObject {
     }
 
     func salvaAluno(dicionarioDeAluno: Dictionary<String,Any>){
-        // se não existir um aluno, significa que é novo item. Se existir, é edição
+        var aluno: NSManagedObject?
+        guard let id = UUID(uuidString: dicionarioDeAluno["id"] as! String) else { return }
+        // verificando se a lista de alunos tem algum com o mesmo id recuperado acima, se tiver quer dizer que é o mesmo e ele será editado, se não tiver quer dizer que irá criar um novo aluno
+        let alunos = recuperaAlunos().filter { $0.id == id }
+        if alunos.count > 0 {
+            guard let alunoEncontrado = alunos.first else {return}
+            aluno = alunoEncontrado
+        } else {
+            let entidade = NSEntityDescription.entity(forEntityName: "Aluno", in: contexto)
+            aluno = NSManagedObject(entity: entidade!, insertInto: contexto)
+        }
         
-        let aluno = Aluno(context: contexto)
-        
-        aluno.nome = dicionarioDeAluno["nome"] as? String
-        aluno.endereco = dicionarioDeAluno["endereco"] as? String
-        aluno.telefone = dicionarioDeAluno["telefone"] as? String
-        aluno.site = dicionarioDeAluno["site"] as? String
+        // setando os valores
+        aluno?.setValue(id, forKey: "id")
+        aluno?.setValue(dicionarioDeAluno["nome"], forKey: "nome")
+        aluno?.setValue(dicionarioDeAluno["endereco"], forKey: "endereco")
+        aluno?.setValue(dicionarioDeAluno["telefone"], forKey: "telefone")
+        aluno?.setValue(dicionarioDeAluno["site"], forKey: "site")
         
         guard let nota = dicionarioDeAluno["nota"] else { return }
         if (nota is String) {
-            aluno.nota = (dicionarioDeAluno["nota"] as! NSString).doubleValue
+            aluno?.setValue((dicionarioDeAluno["nota"] as! NSString).doubleValue, forKey: "nota")
         } else {
             let conversaoDeNota = String(describing: nota)
-            aluno.nota = (conversaoDeNota as NSString).doubleValue
+            aluno?.setValue((conversaoDeNota as NSString).doubleValue, forKey: "nota")
         }
         
         
@@ -76,5 +86,10 @@ class AlunoDAO: NSObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func deletaAluno(aluno: Aluno) {
+        contexto.delete(aluno)
+        atualizaContexto()
     }
 }

@@ -42,6 +42,25 @@ class Localizacao: NSObject {
         return botao
     }
     
+    func localizaAlunoNoWaze(_ alunoSelecionado: Aluno) {
+        // verificando se o usuario tem waze e se podemos acessa-lo
+        if UIApplication.shared.canOpenURL(URL(string: "waze://")!) {
+            // recuperando o endereço do aluno
+            guard let enderecoDoAluno = alunoSelecionado.endereco else {return}
+            
+            Localizacao().ConverteEnderecoEmCoordenadas(enderecoDoAluno, local: { (localizacaoEncontrada) in
+                // recuperando a latitude e longitude e convertendo em string
+                let latitude = String(describing: localizacaoEncontrada.location!.coordinate.latitude)
+                let longitude = String(describing: localizacaoEncontrada.location!.coordinate.longitude)
+                
+                // montando a url com a localização que será enviada para o waze
+                let url:String = "waze://?ll=\(latitude),\(longitude)&navigate=yes"
+                
+                UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+            })
+        }
+    }
+    
 }
 
 extension Localizacao: MKMapViewDelegate {

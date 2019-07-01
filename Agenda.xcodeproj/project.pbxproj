@@ -16,6 +16,9 @@
 		03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */; };
 		03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */; };
 		0AAFA5D8A65B0D827C913E9E /* Pods_Agenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A94C357A863B68078486B1 /* Pods_Agenda.framework */; };
+		263D4E4D22CAC5D500E129FC /* LigacaoTelefonica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D4E4C22CAC5D500E129FC /* LigacaoTelefonica.swift */; };
+		263D4E4F22CAC7C400E129FC /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D4E4E22CAC7C400E129FC /* Safari.swift */; };
+		263D4E5122CAC92000E129FC /* Filtro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263D4E5022CAC92000E129FC /* Filtro.swift */; };
 		2657DD1222C1806500D3393B /* Repositorio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657DD1122C1806500D3393B /* Repositorio.swift */; };
 		2657DD1422C1811800D3393B /* AlunoDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657DD1322C1811800D3393B /* AlunoDAO.swift */; };
 		2658BE3A2236A9160032517B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658BE392236A9160032517B /* ImagePicker.swift */; };
@@ -41,6 +44,9 @@
 		03AA17651FC84353003CB2B8 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		03AA17671FC843B1003CB2B8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		03AA176C1FC8515A003CB2B8 /* AlunoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoViewController.swift; sourceTree = "<group>"; };
+		263D4E4C22CAC5D500E129FC /* LigacaoTelefonica.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LigacaoTelefonica.swift; sourceTree = "<group>"; };
+		263D4E4E22CAC7C400E129FC /* Safari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
+		263D4E5022CAC92000E129FC /* Filtro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filtro.swift; sourceTree = "<group>"; };
 		2657DD1122C1806500D3393B /* Repositorio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositorio.swift; sourceTree = "<group>"; };
 		2657DD1322C1811800D3393B /* AlunoDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoDAO.swift; sourceTree = "<group>"; };
 		2658BE392236A9160032517B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -165,6 +171,9 @@
 				26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */,
 				26A8FBE822B848B500DB9011 /* Notificacoes.swift */,
 				26A8FBEA22B84F0E00DB9011 /* AutenticacaoLocal.swift */,
+				263D4E4C22CAC5D500E129FC /* LigacaoTelefonica.swift */,
+				263D4E4E22CAC7C400E129FC /* Safari.swift */,
+				263D4E5022CAC92000E129FC /* Filtro.swift */,
 			);
 			path = Componentes;
 			sourceTree = "<group>";
@@ -349,15 +358,18 @@
 				03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */,
 				26A1D4E122BD08A60025FA58 /* AlunoAPI.swift in Sources */,
 				26A8FBEE22BAD83A00DB9011 /* Pino.swift in Sources */,
+				263D4E5122CAC92000E129FC /* Filtro.swift in Sources */,
 				2657DD1422C1811800D3393B /* AlunoDAO.swift in Sources */,
 				03AA17661FC84353003CB2B8 /* HomeTableViewController.swift in Sources */,
 				03AA17561FC84154003CB2B8 /* Agenda.xcdatamodeld in Sources */,
 				2668622822A9CC270020319F /* MenuDeOpcoes.swift in Sources */,
 				26D3B69B22B304CF00CDCF07 /* CalculaMediaAPI.swift in Sources */,
 				2658BE3A2236A9160032517B /* ImagePicker.swift in Sources */,
+				263D4E4F22CAC7C400E129FC /* Safari.swift in Sources */,
 				03AA17681FC843B1003CB2B8 /* HomeTableViewCell.swift in Sources */,
 				26E0FA8A22AF0FC9008D65BD /* Mensagem.swift in Sources */,
 				26A8FBE922B848B500DB9011 /* Notificacoes.swift in Sources */,
+				263D4E4D22CAC5D500E129FC /* LigacaoTelefonica.swift in Sources */,
 				2657DD1222C1806500D3393B /* Repositorio.swift in Sources */,
 				26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */,
 				03AA174E1FC84154003CB2B8 /* AppDelegate.swift in Sources */,
