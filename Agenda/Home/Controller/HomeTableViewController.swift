@@ -27,9 +27,16 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuraSearch()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(atualizaAlunos), name: NSNotification.Name(rawValue: "atualizaAlunos"), object: nil)
     }
     
     // MARK: - Métodos
+    
+    // metodo chamado pelo NotificationCenter quando uma notificação com o rawValue = "atualizaAlunos" for disparada pela classe Firebase
+    @objc func atualizaAlunos(){
+        recuperaAlunos()
+    }
     
     func recuperaAlunos(){
         Repositorio().recuperaAlunos { (listaDeAlunos) in

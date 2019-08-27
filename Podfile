@@ -7,5 +7,8 @@ target 'Agenda' do
 
   # Pods for Agenda
   pod 'Alamofire', '~> 4.6'
-
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  
 end
