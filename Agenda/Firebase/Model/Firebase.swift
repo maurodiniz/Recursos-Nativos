@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Firebase
+import FirebaseMessaging
 
 // Classe responsavel por gerar a requisição ao servidor da Alura
 class Firebase: NSObject {
@@ -35,12 +35,12 @@ class Firebase: NSObject {
         guard let data = respostaDoFirebase.data(using: .utf8) else { return }
         
         do{
-            
+            // transformado o tipo 'Data?' em um Dictionary<String,Any>
             guard let mensagem = try JSONSerialization.jsonObject(with: data, options: []) as? Dictionary<String, Any> else { return }
             
             guard let listaDeAlunos = mensagem["alunos"] as? Array<Dictionary<String, Any>> else { return }
             
-            // enviando a lista recuperada do servidor para sincronizar
+            // enviando a lista recuperada do servidor para sincronizar com a que tem no telefone
             sincronizaAlunos(alunos: listaDeAlunos)
             
             // usando a classe nativa NotificationCenter para notificar o HomeTableViewController quando um novo aluno for cadastrado e ele precisa atualizar a tela
@@ -60,7 +60,7 @@ class Firebase: NSObject {
             if status == statusDoAluno.ativo.rawValue {
                 AlunoDAO().salvaAluno(dicionarioDeAluno: aluno)
             } else {
-                // recuperando o id do aluno que o for está percorrendo 
+                // recuperando o id do aluno que o for está percorrendo
                 guard let idDoAluno = aluno["id"] as? String else {return}
                 // chamando a classe AlunoDAO().recuperaAlunos e pedindo para filtrar com base no id recuperado acima, retornando o primeiro resultado
                 guard let aluno = AlunoDAO().recuperaAlunos().filter({ $0.id == UUID(uuidString: idDoAluno) }).first else {return}

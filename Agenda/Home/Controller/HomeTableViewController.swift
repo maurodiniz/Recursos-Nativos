@@ -16,29 +16,54 @@ class HomeTableViewController: UITableViewController {
     var alunoViewController: AlunoViewController?
     var alunos:Array<Aluno> = []
     
+    // criando a variavel pullToRefresh
+    lazy var pullToRefresh: UIRefreshControl = {
+        let pullToRefresh = UIRefreshControl()
+        //adicionando ação ao pullToRefresh
+        pullToRefresh.addTarget(self, action: #selector(recarregaAlunos(_:)), for: UIControlEvents.valueChanged)
+        
+        return pullToRefresh
+    }()
+    
     // MARK: - View Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        recuperaAlunos()
+        recuperaTodosAlunos()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuraSearch()
+        tableView.addSubview(pullToRefresh)
         
         NotificationCenter.default.addObserver(self, selector: #selector(atualizaAlunos), name: NSNotification.Name(rawValue: "atualizaAlunos"), object: nil)
     }
     
     // MARK: - Métodos
     
-    // metodo chamado pelo NotificationCenter quando uma notificação com o rawValue = "atualizaAlunos" for disparada pela classe Firebase
-    @objc func atualizaAlunos(){
-        recuperaAlunos()
+    @objc func recarregaAlunos(_ refreshControl: UIRefreshControl){
+        guard let ultimaVersao = AlunoUserDefaults().recuperaUltimaVersao() else {return}
+        if ultimaVersao == nil {
+        // se a ultimaVersao for igual nil significa que o app não fez nenhuma requisição ao servidor e devemos preencher a lista com todos alunos
+            recuperaTodosAlunos()
+        } else {
+            // todo: recuperar os ultimos alunos
+            Repositorio().recuperaUltimosAlunos(ultimaVersao) {
+                <#code#>
+            }
+        }
+        
+        refreshControl.endRefreshing()
     }
     
-    func recuperaAlunos(){
+    // metodo chamado pelo NotificationCenter quando uma notificação com o rawValue = "atualizaAlunos" for disparada pela classe Firebase
+    @objc func atualizaAlunos(){
+        recuperaTodosAlunos()
+    }
+    
+    func recuperaTodosAlunos(){
         Repositorio().recuperaAlunos { (listaDeAlunos) in
             self.alunos = listaDeAlunos
             self.tableView.reloadData()

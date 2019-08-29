@@ -30,6 +30,7 @@
 		26C4E7C7230F54F60053A12E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26C4E7C6230F54F60053A12E /* GoogleService-Info.plist */; };
 		26C4E7CB231491310053A12E /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4E7CA231491310053A12E /* Firebase.swift */; };
 		26C4E7CD2314972B0053A12E /* Configuracao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4E7CC2314972B0053A12E /* Configuracao.swift */; };
+		26C4E7CF231886420053A12E /* AlunoUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C4E7CE231886420053A12E /* AlunoUserDefaults.swift */; };
 		26D3B69422B1AE9C00CDCF07 /* Localizacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */; };
 		26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */; };
 		26D3B69B22B304CF00CDCF07 /* CalculaMediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */; };
@@ -62,6 +63,7 @@
 		26C4E7C6230F54F60053A12E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26C4E7CA231491310053A12E /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		26C4E7CC2314972B0053A12E /* Configuracao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuracao.swift; sourceTree = "<group>"; };
+		26C4E7CE231886420053A12E /* AlunoUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlunoUserDefaults.swift; sourceTree = "<group>"; };
 		26D3B69322B1AE9C00CDCF07 /* Localizacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizacao.swift; sourceTree = "<group>"; };
 		26D3B69722B1BA7E00CDCF07 /* MapaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
 		26D3B69A22B304CF00CDCF07 /* CalculaMediaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculaMediaAPI.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				26A1D4E022BD08A60025FA58 /* AlunoAPI.swift */,
 				2657DD1122C1806500D3393B /* Repositorio.swift */,
 				2657DD1322C1811800D3393B /* AlunoDAO.swift */,
+				26C4E7CE231886420053A12E /* AlunoUserDefaults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				263D4E4D22CAC5D500E129FC /* LigacaoTelefonica.swift in Sources */,
 				2657DD1222C1806500D3393B /* Repositorio.swift in Sources */,
 				26D3B69822B1BA7E00CDCF07 /* MapaViewController.swift in Sources */,
+				26C4E7CF231886420053A12E /* AlunoUserDefaults.swift in Sources */,
 				03AA174E1FC84154003CB2B8 /* AppDelegate.swift in Sources */,
 				26D3B69422B1AE9C00CDCF07 /* Localizacao.swift in Sources */,
 				26A8FBEB22B84F0E00DB9011 /* AutenticacaoLocal.swift in Sources */,

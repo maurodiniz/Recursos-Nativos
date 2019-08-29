@@ -28,6 +28,13 @@ class Repositorio: NSObject {
         }
     }
     
+    func recuperaUltimosAlunos(_ versao:String, completion:@escaping() -> Void) {
+        AlunoAPI().recuperaUltimosAlunos(versao) {
+            // ao final da execução do completion do AlunoAPI().recuperaUltimosAlunos ele chamará esse cmpletion que retornará a resposta ao HomeTableviewController
+            completion()
+        }
+    }
+    
     func deletaAluno(aluno: Aluno) {
         // extraindo o id recebido por parametro
         guard let idAluno = aluno.id else { return }

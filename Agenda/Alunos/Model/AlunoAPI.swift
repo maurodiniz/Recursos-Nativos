@@ -14,9 +14,14 @@ import Alamofire
 class AlunoAPI: NSObject {
     
     // MARK: - GET
+    lazy var urlPadrao: String = {
+        guard let urlPadrao = Configuracao().getUrlPadrao() else { return ""}
+        return urlPadrao
+    }()
+    
+    // MARK: - GET
     // criando closure para que esse metodo só retorne algo depois que o servidor processar a requisição
     func recuperaAlunos(completion:@escaping() -> Void){
-        guard let urlPadrao = Configuracao().getUrlPadrao() else { return }
         Alamofire.request("\(urlPadrao)api/aluno", method:.get).responseJSON { (response) in
             switch response.result {
                 case .success:
@@ -26,7 +31,8 @@ class AlunoAPI: NSObject {
                         for dicionarioDeAluno in listaDeAlunos {
                             AlunoDAO().salvaAluno(dicionarioDeAluno: dicionarioDeAluno)
                         }
-                        
+                        // chamando a classe AlunoUserDefaults para salvar a data/hora que essa requisição está sendo feita
+                        AlunoUserDefaults().salvaVersao(resposta)
                         completion()
                     }
                     break
@@ -59,7 +65,6 @@ class AlunoAPI: NSObject {
     
     // MARK: - DELETE
     func deletaAluno(id: String) {
-        guard let urlPadrao = Configuracao().getUrlPadrao() else { return }
         Alamofire.request("\(urlPadrao)api/aluno/\(id)", method: .delete).responseJSON { (resposta) in
             switch resposta.result {
                 case .failure:
@@ -67,6 +72,20 @@ class AlunoAPI: NSObject {
                     break
                 default: break
             } 
+        }
+    }
+    
+    // metodo criado para adicionar a data da ultima versão da lista de alunos 
+    func recuperaUltimosAlunos(_ versao: String, completion:@escaping() -> Void) {
+        Alamofire.request("\(urlPadrao)api/aluno/diff", method: .get, headers:["datahora":versao]).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                print("ULTIMOS ALUNOS")
+                break
+            case .failure:
+                print("FALHA")
+                break
+            }
         }
     }
     
