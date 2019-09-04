@@ -44,15 +44,13 @@ class HomeTableViewController: UITableViewController {
     // MARK: - Métodos
     
     @objc func recarregaAlunos(_ refreshControl: UIRefreshControl){
-        guard let ultimaVersao = AlunoUserDefaults().recuperaUltimaVersao() else {return}
+        let ultimaVersao = AlunoUserDefaults().recuperaUltimaVersao()
         if ultimaVersao == nil {
         // se a ultimaVersao for igual nil significa que o app não fez nenhuma requisição ao servidor e devemos preencher a lista com todos alunos
             recuperaTodosAlunos()
         } else {
-            // todo: recuperar os ultimos alunos
-            Repositorio().recuperaUltimosAlunos(ultimaVersao) {
-                <#code#>
-            }
+            guard let versao = ultimaVersao else {return}
+            recuperaUltimosAlunos(versao)
         }
         
         refreshControl.endRefreshing()
@@ -68,6 +66,14 @@ class HomeTableViewController: UITableViewController {
             self.alunos = listaDeAlunos
             self.tableView.reloadData()
         }
+    }
+    
+    func recuperaUltimosAlunos(_ versao: String){
+        Repositorio().recuperaUltimosAlunos(versao, completion: {
+            // depois que a requisição for feita e os alunos forem salvos localmente preciso atualizar a lista de alunos e o tableView
+            self.alunos = AlunoDAO().recuperaAlunos()
+            self.tableView.reloadData()
+        })
     }
     
     func configuraSearch() {

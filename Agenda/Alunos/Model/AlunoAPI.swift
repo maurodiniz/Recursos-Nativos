@@ -26,13 +26,7 @@ class AlunoAPI: NSObject {
             switch response.result {
                 case .success:
                     if let resposta = response.result.value as? Dictionary<String, Any> {
-                        guard let listaDeAlunos = resposta["alunos"] as? Array<Dictionary<String, Any>> else {return}
-                        
-                        for dicionarioDeAluno in listaDeAlunos {
-                            AlunoDAO().salvaAluno(dicionarioDeAluno: dicionarioDeAluno)
-                        }
-                        // chamando a classe AlunoUserDefaults para salvar a data/hora que essa requisição está sendo feita
-                        AlunoUserDefaults().salvaVersao(resposta)
+                        self.serializaAlunos(resposta)
                         completion()
                     }
                     break
@@ -45,7 +39,7 @@ class AlunoAPI: NSObject {
     }
     
     // MARK: - PUT
-    func salvaAlunosNoServidor(parametros: Array<Dictionary<String, String>>) {
+    func salvaAlunosNoServidor(parametros: Array<Dictionary<String, Any>>, completion:@escaping(_ salvo: Bool) -> Void) {
         guard let urlPadrao = Configuracao().getUrlPadrao() else { return }
         guard let url = URL(string: "\(urlPadrao)api/aluno/lista") else { return }
         
@@ -60,17 +54,24 @@ class AlunoAPI: NSObject {
         requisicao.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // fazendo a request usando a requisicao criada + Alamofire
-        Alamofire.request(requisicao)
+        Alamofire.request(requisicao).responseData { (resposta) in
+            if resposta.error == nil{
+                completion(true)
+            } 
+        }
     }
     
     // MARK: - DELETE
-    func deletaAluno(id: String) {
+    func deletaAluno(id: String, completion:@escaping(_ apagado: Bool) -> Void) {
         Alamofire.request("\(urlPadrao)api/aluno/\(id)", method: .delete).responseJSON { (resposta) in
             switch resposta.result {
+                case .success:
+                    completion(true)
+                    break
                 case .failure:
+                    completion(false)
                     print(resposta.result.error!)
                     break
-                default: break
             } 
         }
     }
@@ -81,12 +82,39 @@ class AlunoAPI: NSObject {
             switch response.result {
             case .success:
                 print("ULTIMOS ALUNOS")
+                if let resposta = response.result.value as? Dictionary<String,Any> {
+                    self.serializaAlunos(resposta)
+                }
+                completion()
                 break
             case .failure:
                 print("FALHA")
                 break
             }
         }
+    }
+    
+    // MARK: - Serialização
+    func serializaAlunos(_ resposta: Dictionary<String,Any>){
+        guard let listaDeAlunos = resposta["alunos"] as? Array<Dictionary<String, Any>> else {return}
+        
+        for dicionarioDeAluno in listaDeAlunos {
+            guard let status = dicionarioDeAluno["desativado"] as? Bool else {return}
+            // se o status for 'true'devo excluir do device, se for 'false' devo salvar
+            if status {
+                guard let idDoAluno = dicionarioDeAluno["id"] as? String else {return}
+                guard let UUIDAluno = UUID(uuidString: idDoAluno) else {return}
+                // validando se existe algum aluno com o UUId igual do recuperado acima
+                if let aluno = AlunoDAO().recuperaAlunos().filter({$0.id == UUIDAluno}).first {
+                    AlunoDAO().deletaAluno(aluno: aluno)
+                } else {
+                    AlunoDAO().salvaAluno(dicionarioDeAluno: dicionarioDeAluno)
+                }
+            }
+            
+        }
+        // chamando a classe AlunoUserDefaults para salvar a data/hora que essa requisição está sendo feita
+        AlunoUserDefaults().salvaVersao(resposta)
     }
     
 }
